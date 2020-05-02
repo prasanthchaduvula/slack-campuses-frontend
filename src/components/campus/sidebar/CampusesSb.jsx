@@ -14,7 +14,8 @@ class CampusesSb extends React.Component {
   };
 
   render() {
-    let user = this.props.USER;
+    let { USER } = this.props;
+
     return (
       <div className="sidebar">
         <p className="sidebar-heading">Campuses</p>
@@ -23,16 +24,22 @@ class CampusesSb extends React.Component {
             <div>
               <NavLink
                 to="/campuses/create"
-                activeClassName="selected-menuitem"
+                activeClassName="selected-item-bg selected-item-white-color"
                 className="only-flex campusSb-item"
               >
                 <RiAppsLine className="campusSb-icon" />
                 <p className="campusSb-text">Create campus</p>
               </NavLink>
             </div>
-            <div className="only-flex campusSb-item">
-              <IoIosAddCircleOutline className="campusSb-icon" />
-              <p className="campusSb-text">Join campus</p>
+            <div>
+              <NavLink
+                to="/campuses/join"
+                activeClassName="selected-item-bg selected-item-white-color"
+                className="only-flex campusSb-item"
+              >
+                <IoIosAddCircleOutline className="campusSb-icon" />
+                <p className="campusSb-text">Join campus</p>
+              </NavLink>
             </div>
           </div>
           <div className="campusSb-sec-section">
@@ -41,8 +48,8 @@ class CampusesSb extends React.Component {
               <p className="campusSb-text">your campuses</p>
             </div>
             <div className="padding-top-.5rem">
-              {user &&
-                user.campusesId.map((campus, index) => (
+              {USER && USER.campusesId.length ? (
+                USER.campusesId.map((campus, index) => (
                   <div key={index} onClick={() => this.handleClick(campus)}>
                     <NavLink
                       to={`/campuses/${campus.name}`}
@@ -52,7 +59,12 @@ class CampusesSb extends React.Component {
                       <p className="campusSb-text">{campus.name}</p>
                     </NavLink>
                   </div>
-                ))}
+                ))
+              ) : (
+                <div className="sidebar-notext-div">
+                  <p className="sidebar-login-link">No Campuses found</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

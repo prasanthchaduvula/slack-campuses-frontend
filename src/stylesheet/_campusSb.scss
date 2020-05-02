@@ -12,6 +12,7 @@
   line-height: 2;
   cursor: pointer;
   padding: 0 1rem;
+  color: $secondary;
   &:hover {
     background-color: $base;
   }
@@ -19,13 +20,11 @@
 .campusSb-icon {
   font-size: 1rem;
   font-weight: 700;
-  color: $secondary;
   margin-right: 0.3rem;
 }
 .campusSb-text {
   font-size: 1rem;
   font-weight: 300;
-  color: $secondary;
   letter-spacing: 0.04rem;
 }
 

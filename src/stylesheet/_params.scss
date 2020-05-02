@@ -37,7 +37,21 @@
   border: none;
   border-radius: 0.3rem;
   outline: none;
+  cursor: pointer;
 }
 .padding-top-.5rem {
   padding-top: 0.5rem;
+}
+.selected-item-bg {
+  background: #1164a3;
+}
+.selected-item-white-color {
+  color: white;
+}
+.margin-left-5rem {
+  margin-left: 5rem;
+}
+.toggle {
+  font-size: 3rem;
+  font-weight: 700;
 }

@@ -35,7 +35,7 @@ class CampusSb extends React.Component {
             <div>
               <NavLink
                 to={`/campuses/${handle}/create`}
-                activeClassName="selected-menuitem"
+                activeClassName="selected-menuitem "
                 className="only-flex campusSb-item"
               >
                 <IoIosAddCircleOutline className="campusSb-icon" />

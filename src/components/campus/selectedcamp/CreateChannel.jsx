@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
 import { IoMdClose } from 'react-icons/io';
+import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
 
 class CreateChannel extends React.Component {
   constructor() {
@@ -8,13 +9,22 @@ class CreateChannel extends React.Component {
     this.state = {
       msg: '',
       inputValue: '',
+      private: false,
       BTN_VALUE: 'Create'
     };
   }
 
   handleChange = event => {
+    console.log('in');
     let { name, value } = event.target;
     this.setState({ msg: '', [name]: value });
+    if (value.charAt(0) !== '#') {
+      this.setState({ msg: 'Channel should start with #' });
+    }
+  };
+
+  handlePrivate = () => {
+    this.setState({ private: !this.state.private });
   };
 
   handleSubmit = e => {
@@ -28,9 +38,8 @@ class CreateChannel extends React.Component {
   };
 
   render() {
-    let { inputValue, msg, BTN_VALUE } = this.state;
+    let { msg, inputValue, BTN_VALUE } = this.state;
     let handle = this.props.match.params.campusname;
-
     return (
       <>
         <div className="flex portal">
@@ -52,10 +61,26 @@ class CreateChannel extends React.Component {
                 className="block portal-input"
                 type="text"
                 name="inputValue"
-                placeholder="# e.g. javascript"
+                placeholder="e.g. #javascript"
                 value={inputValue}
                 onChange={this.handleChange}
               />
+              <label className="block label-heading">Make private</label>
+
+              <div className="space-flex">
+                <p className="portal-subheading">
+                  {this.state.private
+                    ? 'This can’t be undone. A private channel cannot be made public later on.'
+                    : 'When a channel is set to private, it can only be viewed or joined by invitation'}
+                </p>
+                <div onClick={this.handlePrivate}>
+                  {this.state.private ? (
+                    <BsToggleOn className="margin-left-5rem toggle" />
+                  ) : (
+                    <BsToggleOff className="margin-left-5rem toggle" />
+                  )}
+                </div>
+              </div>
               <button
                 className={`float-right btn  before-portal-btn ${
                   inputValue ? 'portal-btn' : ''

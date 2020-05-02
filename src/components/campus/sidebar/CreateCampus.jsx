@@ -23,29 +23,35 @@ class CreateCampus extends React.Component {
     if (!inputValue) {
       this.setState({ msg: "Don't forget to name your campus" });
     }
-    this.setState({ BTN_VALUE: 'Creating' });
+    if (!navigator.onLine) {
+      this.setState({ msg: 'Check your internet connection' });
+    }
+
     // create campus
-    fetch('/api/v1/campus', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.fomotoken
-      },
-      body: JSON.stringify({
-        name: inputValue.toLowerCase()
+    if (inputValue && navigator.onLine) {
+      this.setState({ BTN_VALUE: 'Creating' });
+      fetch('/api/v1/campus', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.fomotoken
+        },
+        body: JSON.stringify({
+          name: inputValue.toLowerCase()
+        })
       })
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (!data.success) {
-          this.setState({ msg: data.message, BTN_VALUE: 'Create' });
-        }
-        if (data.success) {
-          this.setState({ BTN_VALUE: 'Create' });
-          this.props.history.push('/campuses');
-        }
-        console.log(data);
-      });
+        .then(res => res.json())
+        .then(data => {
+          if (!data.success) {
+            this.setState({ msg: data.message, BTN_VALUE: 'Create' });
+          }
+          if (data.success) {
+            this.setState({ BTN_VALUE: 'Create' });
+            this.props.history.push('/campuses');
+          }
+          console.log(data);
+        });
+    }
   };
 
   render() {
@@ -72,7 +78,7 @@ class CreateCampus extends React.Component {
                 className="block portal-input"
                 type="text"
                 name="inputValue"
-                placeholder="altcampus"
+                placeholder="e.g. altcampus"
                 value={inputValue}
                 onChange={this.handleChange}
               />
