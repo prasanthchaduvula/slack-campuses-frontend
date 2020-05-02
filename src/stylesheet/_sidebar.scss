@@ -1,0 +1,37 @@
+.sidebar {
+  width: 18%;
+  background: $primary;
+  min-height: 100vh;
+}
+
+.sidebar-heading {
+  padding: 1rem;
+  border-top: 1px solid $primaryBorder;
+  border-bottom: 1px solid $primaryBorder;
+  color: white;
+  letter-spacing: 0.04rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.sidebar-section-scroll {
+  overflow: scroll;
+  height: calc(100vh - 100px);
+}
+.sidebar-notext-div {
+  align-items: center;
+  min-height: 50vh;
+  padding: 1rem;
+  letter-spacing: 0.04rem;
+  font-size: 1rem;
+  font-weight: 300;
+}
+.sidebar-login-link {
+  color: #2bac76;
+  margin-right: 0.3rem;
+  font-weight: 500;
+}
+.sidebar-no-text {
+  color: $secondary;
+}
+.sidebar-section {
+}

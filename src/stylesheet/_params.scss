@@ -1,0 +1,43 @@
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.space-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.only-flex {
+  display: flex;
+}
+.block {
+  display: block;
+}
+.position-center-fixed {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 10;
+  width: 100%;
+}
+.float-left {
+  float: left;
+}
+.float-right {
+  float: right;
+}
+.btn {
+  padding: 0.5rem 0.7rem;
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: 0.04rem;
+  border: none;
+  border-radius: 0.3rem;
+  outline: none;
+}
+.padding-top-.5rem {
+  padding-top: 0.5rem;
+}
