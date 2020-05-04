@@ -1,6 +1,5 @@
 // get user
 export const currentUser = fetchUser => {
-  console.log('came');
   fetch('/api/v1/users/', {
     method: 'GET',
     headers: {
@@ -10,7 +9,6 @@ export const currentUser = fetchUser => {
   })
     .then(res => res.json())
     .then(data => {
-      console.log(data);
       fetchUser(data);
     });
 };

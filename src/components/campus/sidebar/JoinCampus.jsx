@@ -21,7 +21,7 @@ class JoinCampus extends React.Component {
     e.preventDefault();
     let { inputValue } = this.state;
     if (!inputValue) {
-      this.setState({ msg: "Don't forget to name your campus" });
+      this.setState({ msg: "Don't forget Campus ID" });
     }
     if (!navigator.onLine) {
       this.setState({ msg: 'Check your internet connection' });
@@ -78,7 +78,7 @@ class JoinCampus extends React.Component {
                 onChange={this.handleChange}
               />
               <button
-                className={`float-right btn  before-portal-btn ${
+                className={`float-right btn  before-portal-btn margin-top-1rem${
                   inputValue ? 'portal-btn' : ''
                 }`}
                 onClick={this.handleSubmit}

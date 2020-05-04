@@ -28,7 +28,7 @@ class Menu extends React.Component {
             ))}
           </div>
           <div className="flex menu-item">
-            <p className="menu-text">Login</p>
+            <p className="menu-text">Logout</p>
           </div>
         </div>
       </>

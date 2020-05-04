@@ -23,7 +23,7 @@ class CampusesSb extends React.Component {
           <div className="campusSb-fir-section">
             <div>
               <NavLink
-                to="/campuses/create"
+                to="/campuses/campus/create"
                 activeClassName="selected-item-bg selected-item-white-color"
                 className="only-flex campusSb-item"
               >
@@ -33,7 +33,7 @@ class CampusesSb extends React.Component {
             </div>
             <div>
               <NavLink
-                to="/campuses/join"
+                to="/campuses/campus/join"
                 activeClassName="selected-item-bg selected-item-white-color"
                 className="only-flex campusSb-item"
               >
@@ -52,7 +52,7 @@ class CampusesSb extends React.Component {
                 USER.campusesId.map((campus, index) => (
                   <div key={index} onClick={() => this.handleClick(campus)}>
                     <NavLink
-                      to={`/campuses/${campus.name}`}
+                      to={`/campuses/${campus.name}/${campus._id}`}
                       className="only-flex campusSb-item your-campuses-item"
                     >
                       <p className="campusSb-icon">#</p>

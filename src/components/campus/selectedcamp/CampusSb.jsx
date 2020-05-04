@@ -1,4 +1,6 @@
 import React from 'react';
+import socketIOClient from 'socket.io-client';
+
 import {
   IoIosApps,
   IoIosAddCircleOutline,
@@ -8,23 +10,50 @@ import { FaRegAddressBook } from 'react-icons/fa';
 import { withRouter, NavLink } from 'react-router-dom';
 
 class CampusSb extends React.Component {
+  intervalID = 0;
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      endpoint: 'http://localhost:3000'
+    };
   }
 
+  componentDidMount() {
+    let { campusId } = this.props.match.params;
+    if (localStorage.fomotoken) {
+      const { endpoint } = this.state;
+      const socket = socketIOClient(endpoint);
+      this.intervalID = setInterval(
+        () => socket.emit('campus', campusId),
+        4000
+      );
+      socket.on('campusData', data => {
+        this.props.handleCampus(data);
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalID);
+    const { endpoint } = this.state;
+    const socket = socketIOClient(endpoint);
+    socket.off('campusData');
+  }
+
+  handleClick = channel => {
+    this.props.handleChannel(channel);
+  };
+
   render() {
-    let handle = this.props.match.params.campusname;
+    let { campusname, campusId } = this.props.match.params;
     let { CAMPUS } = this.props;
-    console.log(CAMPUS);
     return (
       <div className="sidebar">
         <div className="only-flex campus-top-sec ">
-          <NavLink to="/campuses">
-            <IoMdArrowRoundBack className="campus-backArr " />
+          <NavLink to="/campuses" className="campus-backArr">
+            <IoMdArrowRoundBack />
           </NavLink>
-
-          <p className="campus-heading">{handle}</p>
+          <p className="campus-heading">{campusname}</p>
         </div>
         <div className="sidebar-section-scroll">
           <div className="campusSb-fir-section">
@@ -34,8 +63,8 @@ class CampusSb extends React.Component {
             </div>
             <div>
               <NavLink
-                to={`/campuses/${handle}/create`}
-                activeClassName="selected-menuitem "
+                to={`/campuses/${campusname}/${campusId}/create`}
+                activeClassName="selected-item-bg selected-item-white-color"
                 className="only-flex campusSb-item"
               >
                 <IoIosAddCircleOutline className="campusSb-icon" />
@@ -50,17 +79,29 @@ class CampusSb extends React.Component {
             </div>
             <div className="padding-top-.5rem">
               {CAMPUS &&
-                CAMPUS.channels.map((channel, index) => (
-                  <div key={index}>
-                    <NavLink
-                      to={`/campuses/${handle}/${channel}`}
-                      className="only-flex campusSb-item your-campuses-item"
-                    >
-                      <p className="campusSb-icon">#</p>
-                      <p className="campusSb-text">{channel.substring(1)}</p>
-                    </NavLink>
-                  </div>
-                ))}
+                CAMPUS.channelsId.map((channel, index) =>
+                  channel.membersId.map(member =>
+                    member._id == localStorage.fomouserId ? (
+                      <div
+                        key={index}
+                        onClick={() => this.handleClick(channel)}
+                      >
+                        <NavLink
+                          to={`/campuses/${campusname}/${campusId}/channels/${channel._id}`}
+                          activeClassName="selected-item-bg selected-item-white-color"
+                          className="only-flex campusSb-item your-campuses-item"
+                        >
+                          <p className="campusSb-icon">#</p>
+                          <p className="campusSb-text">
+                            {channel.name.substring(1)}
+                          </p>
+                        </NavLink>
+                      </div>
+                    ) : (
+                      ''
+                    )
+                  )
+                )}
             </div>
           </div>
         </div>

@@ -11,6 +11,9 @@
 .only-flex {
   display: flex;
 }
+.align-items-center {
+  align-items: center;
+}
 .block {
   display: block;
 }
@@ -44,14 +47,28 @@
 }
 .selected-item-bg {
   background: #1164a3;
+  &:hover {
+    background: #1164a3;
+  }
 }
 .selected-item-white-color {
   color: white;
+  &:hover {
+    color: white;
+  }
 }
 .margin-left-5rem {
   margin-left: 5rem;
 }
-.toggle {
-  font-size: 3rem;
-  font-weight: 700;
+.margin-top-1rem {
+  margin-top: 1rem;
+}
+.margin-bottom-1rem {
+  margin-bottom: 1rem;
+}
+.margin-right-1rem {
+  margin-right: 1rem;
+}
+.margin-left-.3rem {
+  margin-left: 0.3rem;
 }

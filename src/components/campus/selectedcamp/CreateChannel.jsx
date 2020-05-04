@@ -15,11 +15,17 @@ class CreateChannel extends React.Component {
   }
 
   handleChange = event => {
-    console.log('in');
     let { name, value } = event.target;
-    this.setState({ msg: '', [name]: value });
+    this.setState({ msg: '', [name]: value.split(' ').join('').toLowerCase() });
     if (value.charAt(0) !== '#') {
       this.setState({ msg: 'Channel should start with #' });
+    }
+    let { CAMPUS } = this.props;
+    if (
+      CAMPUS &&
+      CAMPUS.channels.includes(value.split(' ').join('').toLowerCase())
+    ) {
+      this.setState({ msg: 'That name is already taken by a channel, ' });
     }
   };
 
@@ -30,23 +36,58 @@ class CreateChannel extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     let { inputValue } = this.state;
+    let { CAMPUS } = this.props;
+
     if (!inputValue) {
-      this.setState({ msg: "Don't forget to name your campus" });
+      this.setState({ msg: "Don't forget to name your channel" });
     }
-    this.setState({ BTN_VALUE: 'Creating' });
+    if (!navigator.onLine) {
+      this.setState({ msg: 'Check your internet connection' });
+    }
+
     // create channel
+    if (inputValue && navigator.onLine) {
+      this.setState({
+        BTN_VALUE: 'Creating'
+      });
+      fetch(`/api/v1/channels/${CAMPUS._id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.fomotoken
+        },
+        body: JSON.stringify({
+          name: inputValue,
+          private: this.state.private
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (!data.success) {
+            this.setState({ msg: data.message, BTN_VALUE: 'Create' });
+          }
+          if (data.success) {
+            this.setState({ BTN_VALUE: 'Create' });
+            this.props.history.push(`/campuses/${CAMPUS.name}/${CAMPUS._id}`);
+          }
+          console.log(data);
+        });
+    }
   };
 
   render() {
     let { msg, inputValue, BTN_VALUE } = this.state;
-    let handle = this.props.match.params.campusname;
+    let { campusname, campusId } = this.props.match.params;
     return (
       <>
         <div className="flex portal">
           <div className="portal-wrapper">
             <div className="space-flex portal-topitem">
               <p className="portal-heading">Create a channel</p>
-              <NavLink to={`/campuses/${handle}`} className="portal-close">
+              <NavLink
+                to={`/campuses/${campusname}/${campusId}`}
+                className="portal-close"
+              >
                 <IoMdClose />
               </NavLink>
             </div>
@@ -82,7 +123,7 @@ class CreateChannel extends React.Component {
                 </div>
               </div>
               <button
-                className={`float-right btn  before-portal-btn ${
+                className={`float-right btn  before-portal-btn  margin-top-1rem${
                   inputValue ? 'portal-btn' : ''
                 }`}
                 onClick={this.handleSubmit}

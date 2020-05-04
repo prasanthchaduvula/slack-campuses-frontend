@@ -83,7 +83,7 @@ class CreateCampus extends React.Component {
                 onChange={this.handleChange}
               />
               <button
-                className={`float-right btn  before-portal-btn ${
+                className={`float-right btn  before-portal-btn margin-top-1rem${
                   inputValue ? 'portal-btn' : ''
                 }`}
                 onClick={this.handleSubmit}

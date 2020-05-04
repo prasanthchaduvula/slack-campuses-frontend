@@ -1,0 +1,27 @@
+.message-compose-box {
+  position: absolute;
+  bottom: 5%;
+  width: 100%;
+  padding: 1rem;
+}
+.message-compose-form {
+  border: 1px solid #616061;
+  border-radius: 0.3rem;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+}
+.compose-input {
+  width: 100%;
+  padding: 0.8rem 0 0 0.8rem;
+  font-weight: 500;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+}
+.msg-send-position {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+}
